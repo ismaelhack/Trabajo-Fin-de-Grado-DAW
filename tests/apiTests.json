@@ -1,0 +1,522 @@
+{
+	"info": {
+		"_postman_id": "b61aaa39-002e-4649-89c1-40ad13f13723",
+		"name": "API-Products-TFG",
+		"description": "## This is a description of my API for the Final Degree Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/v1/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9e04c846-a636-403b-b133-c2c9ac8af288",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				},
+				"description": "All resources."
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/products?limit=1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2ffefde6-585f-47d9-87b8-23c2b0bece6c",
+						"exec": [
+							"pm.test(\"Resource must be valid and have a body\", function () { \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     pm.response.to.be.withBody; // body tiene que exitir\r",
+							"     pm.response.to.be.json; // además que sea un JSON válido\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products?limit=1",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Returns an array with the first resource from the database. \"?limit=1\""
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/products?limit=5&offset=0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b0fcf1a0-7895-48c2-81a4-592c21e15d5b",
+						"exec": [
+							"pm.test(\"Payload must be valid and have a body\", function () { \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     pm.response.to.be.withBody; // body tiene que exitir\r",
+							"     pm.response.to.be.json; // además que sea un JSON válido\r",
+							"});\r",
+							"pm.test(\"There must be 5 resources\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.length(5);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products?limit=5&offset=0",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Returns the first five products (first page of the application)"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/products/{Id del producto}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3d4b5b4e-a078-4628-8dfd-7476974d802b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"It has property name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('name');\r",
+							"});\r",
+							"pm.test(\"It has property description\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('description');\r",
+							"});\r",
+							"pm.test(\"It has property price\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('price');\r",
+							"});\r",
+							"pm.test(\"check_name\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.name).to.eql(\"Monitor PC\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products/6358f5a0-2730-11eb-8e3b-4941c7614c39",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"6358f5a0-2730-11eb-8e3b-4941c7614c39"
+					]
+				},
+				"description": "Returns the resource whose property is uuid (unique identifier of each product) the one passed to it in the URL (Monitor PC)"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/products/{Id del producto}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d96e5566-0e71-4c0a-bb7a-ac1943d5b829",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": \"6358f5a0-2730-11eb-8e3b-4941c7614c39\",\r\n    \"name\": \"Monitor PC\",\r\n    \"description\": \"Monitor gaming HP. 60,45 cm. 23.6 pulgadas\",\r\n    \"price\": 110,\r\n    \"image\": \"4bXEkSaZbVWJThB0Rm5KSrgB.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products/6358f5a0-2730-11eb-8e3b-4941c7614c39",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"6358f5a0-2730-11eb-8e3b-4941c7614c39"
+					]
+				},
+				"description": "Modifies the specific resource that matches the id property passed to it in the URL\r\n, in this case Monitor PC."
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/products/{Id del producto}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3888833-bdd9-432a-9efc-06c34a55c81b",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": \"6358f5a0-2730-11eb-8e3b-4941c7614c39\",\r\n    \"name\": \"Monitor PC\",\r\n    \"description\": \"Monitor gaming HP. 60,45 cm. 23.6 pulgadas\",\r\n    \"image\": \"4bXEkSaZbVWJThB0Rm5KSrgB.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products/6358f5a0-2730-11eb-8e3b-4941c7614c39 ",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"6358f5a0-2730-11eb-8e3b-4941c7614c39 "
+					]
+				},
+				"description": "It must give error \"400, Bad Request\" due to missing data."
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2f96bf18-823f-4525-b989-07058ab203fa",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"Created\");\r",
+							"});\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": \"bbff03c0-29ba-11eb-b82c-819f0dd4b5a4\",\r\n    \"name\": \"Portátil MacBook\",\r\n    \"description\": \"Portátil MacBook Apple. 8 GB de memoria RAM, con 500 GB de disco duro HDD\",\r\n    \"price\": 540,\r\n    \"image\": \"7_qH5C8iqVJGmznAv54QfbBv.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				},
+				"description": "Create a new resource. (Portátil MacBook)"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a7d0b9c8-9686-40af-a335-75370aac44ed",
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": \"bbff03c0-29ba-11eb-b82c-819f0dd4b5a4\",\r\n    \"name\": \"Portátil MacBook\",\r\n    \"description\": \"Portátil MacBook Apple. 8 GB de memoria RAM, con 500 GB de disco duro HDD\",\r\n    \"price\": 540,\r\n    \"image\": \"7_qH5C8iqVJGmznAv54QfbBv.jpg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				},
+				"description": "It should throw error 409 conflict because we already have the same product, and the same product cannot be inserted twice"
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cf36dacb-f9ec-4b35-aac9-5ea604c22351",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"uuid\": \"bbff03c0-29ba-11eb-b82c-819f0dd4b5a4\",\r\n    \"name\": \"Portátil MacBook\",\r\n    \"description\": \"Portátil MacBook Apple. 8 GB de memoria RAM, con 500 GB de disco duro HDD\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				},
+				"description": "It must give error \"400, Bad Request\" due to missing data."
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/products/{Id del producto}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dd9cf942-1a99-4e9f-9c33-053986306bc7",
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							"pm.test(\"Failed POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([405]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products/bbff03c0-29ba-11eb-b82c-819f0dd4b5a4",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"bbff03c0-29ba-11eb-b82c-819f0dd4b5a4"
+					]
+				},
+				"description": "Method error not allowed, because we cannot POST a specific data."
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1396af57-2bde-4c43-a383-e30bfb528bf5",
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							"pm.test(\"Failed POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([405]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				},
+				"description": "Method error not allowed, because we cannot PUT a data collection."
+			},
+			"response": []
+		},
+		{
+			"name": "/api/v1/products/{Id del producto}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc437ff5-d676-4269-8131-540ba80bfcc4",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://app-products-angular.herokuapp.com/api/v1/products/bbff03c0-29ba-11eb-b82c-819f0dd4b5a4",
+					"host": [
+						"https://app-products-angular.herokuapp.com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"bbff03c0-29ba-11eb-b82c-819f0dd4b5a4"
+					]
+				},
+				"description": "Delete the resource that matches the unique id parameter that is passed through the URL\r\n. In this case -> (Portátil MacBook)"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
