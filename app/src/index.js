@@ -1,55 +1,96 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const express =  require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const path = require("path");
-const multiparty = require("connect-multiparty");
-const productAPI = require(path.join(__dirname,"/products-API"));
-
+const express = require("express");
 const app = express();
+const path = require("path");
+const mongoose = require("mongoose");
+var fs = require("fs");
+port = process.env.PORT || 1881;
+const routes = require("./routes/products");
 
-app.use(express.static(path.join(__dirname, 'public')));
+// routes
+var pathAPI = "";
+app.use(express.static(path.join(__dirname, "public")));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
-
-// settings
-const port = process.env.PORT || 8080;
-const BASE_PATH = "/api";
-
-// middlewares
-app.use(bodyParser.json());
-app.use(cors());
-var md_upload = multiparty({ uploadDir: "./upload/products" });
-
-// database
-const MongoClient = require('mongodb').MongoClient;
-
-const uri = process.env.MONGODB_URI;
-
-const client = new MongoClient(uri, { 
-    useNewUrlParser: true,
-    useUnifiedTopology: true 
-});
-
-var products;
-
-client.connect(err => {
-  products = client.db("tfg").collection("products");
-  // perform actions on the collection object
-  console.log("Connected");
-
-  // Call to product-API
-  productAPI(app, BASE_PATH, products, md_upload);
-
-  app.listen(port, () =>{
-    console.log("Server ready on port: " + port);
-  }).on("error", (e) => {
-    console.log("Server not ready: " + e);
+app.get("/display/:image", (req, res) => {
+  let file = req.params.image;
+  console.log(pathAPI + "/display/" + file);
+  let path_file = "../products/" + file;
+  fs.access(path_file, fs.constants.F_OK, (err) => {
+    if (err) {
+      return res.status(404).send({
+        status: "error",
+        message: "La imagen no existe !!!",
+      });
+    } else {
+      return res.sendFile(path.resolve(path_file));
+    }
   });
-  
 });
 
+app.post(pathAPI, (req, res) => {
+  console.log("Registering post " + pathAPI + "...");
+  var newProduct = req.body;
 
+  products
+    .find({
+      name: newProduct["name"],
+      price: newProduct["price"],
+      description: newProduct["description"],
+    })
+    .toArray((err, productsArray) => {
+      if (err) console.log("Error: " + err);
+
+      if (
+        newProduct == "" ||
+        newProduct.name == null ||
+        newProduct.description == null ||
+        newProduct.price == null ||
+        newProduct.image == null
+      ) {
+        res.sendStatus(400, "Bad Request");
+      } else if (productsArray.length == 0) {
+        products.insert(newProduct);
+        console.log("Request accepted, creating new resource in database.");
+        res.sendStatus(201, "Created");
+      } else {
+        console.log("Error: Resource already exists in the database.");
+        res.sendStatus(409, "Conflict");
+      }
+    });
+});
+
+app.delete(pathAPI + "/:uuid", (req, res) => {
+  var uuid = req.params.uuid;
+
+  console.log("Registering delete " + pathAPI + "/" + uuid);
+
+  products.find({ uuid: uuid }).toArray((err, productsArray) => {
+    if (err) {
+      console.log("Error: " + err);
+    }
+    if (productsArray.length > 0) {
+      products.remove(productsArray[0]);
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(404, "Resource not found");
+    }
+  });
+});
+
+// middleware
+app.use(express.json());
+app.use("/api", routes);
+
+// mongodb connection
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("Connected to mongo atlas"))
+  .catch((error) => console.log(error));
+
+app.listen(port, () => {
+  console.log("Servidor corriendo en http://localhost:" + port);
+});

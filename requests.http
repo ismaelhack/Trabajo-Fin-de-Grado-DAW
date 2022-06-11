@@ -1,0 +1,28 @@
+###
+POST http://localhost:1881/api/products HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Monitor Asus",
+    "price": 129.99,
+    "image": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F61tN4PIHfVL._SY445_.jpg&imgrefurl=https%3A%2F%2Fwww.amazon.es%2FUgreen-30103-Micro-Standard-Cable%2Fdp%2FB00P0DSHPW&tbnid=5nOsoOjBpbEGoM&vet=12ahUKEwi8yuq62KL4AhVvYPEDHW0DB1oQMygBegUIARCfAg..i&docid=N-z_hQc3VSubdM&w=334&h=445&q=hdmi&ved=2ahUKEwi8yuq62KL4AhVvYPEDHW0DB1oQMygBegUIARCfAg"
+}
+
+###
+PUT http://localhost:1881/api/products/62a3226d576fb7382e92ed5d HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Monitor Asus",
+    "price": 99.99,
+    "image": "https://www.google.com/imgres?imgurl=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F61tN4PIHfVL._SY445_.jpg&imgrefurl=https%3A%2F%2Fwww.amazon.es%2FUgreen-30103-Micro-Standard-Cable%2Fdp%2FB00P0DSHPW&tbnid=5nOsoOjBpbEGoM&vet=12ahUKEwi8yuq62KL4AhVvYPEDHW0DB1oQMygBegUIARCfAg..i&docid=N-z_hQc3VSubdM&w=334&h=445&q=hdmi&ved=2ahUKEwi8yuq62KL4AhVvYPEDHW0DB1oQMygBegUIARCfAg"
+}
+
+###
+GET http://localhost:1881/api/products HTTP/1.1
+
+###
+GET http://localhost:1881/api/products/62a3226d576fb7382e92ed5d HTTP/1.1
+
+###
+DELETE http://localhost:1881/api/products/62a31f39026b185dc2d25762 HTTP/1.1

@@ -25,7 +25,7 @@ deployment app angular"`
 
 ## Application URL
 
-- <https://app-products-angular.herokuapp.com/>
+- <localhost:1881/>
 
 ## API documentation
 
