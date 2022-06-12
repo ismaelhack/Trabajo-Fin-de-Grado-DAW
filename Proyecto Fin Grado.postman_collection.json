@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "67b01460-5382-4b9d-a283-95ec57833336",
+		"name": "Proyecto Fin Grado",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET IMAGE",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1881/display/3JeVeiJeiuQwhipRgjWj7S6n",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1881",
+					"path": [
+						"display",
+						"3JeVeiJeiuQwhipRgjWj7S6n"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:1881/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1881",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1881/id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1881",
+					"path": [
+						"id"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
